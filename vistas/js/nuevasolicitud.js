@@ -1,15 +1,3 @@
-function getEncargado() {
-  var iddpto = document.getElementById("departamento").value;
-  $.ajax({
-    type: "POST",
-    url: "ajax/encargados.ajax.php",
-    data: { id: iddpto },
-    success: function (data) {
-      document.getElementById("cardcliente").innerHTML = data;
-    },
-  });
-}
-
 $("#select1").hide();
 $("#select2").hide();
 $("#select3").hide();
@@ -22,60 +10,79 @@ $("#departamento").on("change", function () {
   getEncargado();
   var departamento = $(this).val();
   if (departamento == 1) {
-    $("#select1").show();
-    $("#select2").hide();
-    $("#select3").hide();
-    $("#select4").hide();
-    $("#select5").hide();
-    $("#select6").hide();
-    $("#select7").hide();
+    $.ajax({
+      type: "POST",
+      url: "ajax/tramites.ajax.php",
+      data: { id: 1 },
+      success: function (data) {
+        document.getElementById("tramite_select").innerHTML = data;
+      },
+    });
   } else if (departamento == 2) {
-    $("#select1").hide();
-    $("#select2").hide();
-    $("#select3").show();
-    $("#select4").hide();
-    $("#select5").hide();
-    $("#select6").hide();
-    $("#select7").hide();
+    $.ajax({
+      type: "POST",
+      url: "ajax/tramites.ajax.php",
+      data: { id: 2 },
+      success: function (data) {
+        document.getElementById("tramite_select").innerHTML = data;
+      },
+    });
   } else if (departamento == 3) {
-    $("#select1").hide();
-    $("#select2").hide();
-    $("#select3").hide();
-    $("#select4").show();
-    $("#select5").hide();
-    $("#select6").hide();
-    $("#select7").hide();
+    $.ajax({
+      type: "POST",
+      url: "ajax/tramites.ajax.php",
+      data: { id: 3 },
+      success: function (data) {
+        document.getElementById("tramite_select").innerHTML = data;
+      },
+    });
   } else if (departamento == 4) {
-    $("#select1").hide();
-    $("#select2").hide();
-    $("#select3").hide();
-    $("#select4").hide();
-    $("#select5").hide();
-    $("#select6").hide();
-    $("#select7").show();
+    $.ajax({
+      type: "POST",
+      url: "ajax/tramites.ajax.php",
+      data: { id: 4 },
+      success: function (data) {
+        document.getElementById("tramite_select").innerHTML = data;
+      },
+    });
   } else if (departamento == 5) {
-    $("#select1").hide();
-    $("#select2").show();
-    $("#select3").hide();
-    $("#select4").hide();
-    $("#select5").hide();
-    $("#select6").hide();
-    $("#select7").hide();
+    $.ajax({
+      type: "POST",
+      url: "ajax/tramites.ajax.php",
+      data: { id: 5 },
+      success: function (data) {
+        document.getElementById("tramite_select").innerHTML = data;
+      },
+    });
   } else if (departamento == 6) {
-    $("#select1").hide();
-    $("#select2").hide();
-    $("#select3").hide();
-    $("#select4").hide();
-    $("#select5").show();
-    $("#select6").hide();
-    $("#select7").hide();
+    $.ajax({
+      type: "POST",
+      url: "ajax/tramites.ajax.php",
+      data: { id: 6 },
+      success: function (data) {
+        document.getElementById("tramite_select").innerHTML = data;
+      },
+    });
   } else if (departamento == 7) {
-    $("#select1").hide();
-    $("#select2").hide();
-    $("#select3").hide();
-    $("#select4").hide();
-    $("#select5").hide();
-    $("#select6").show();
-    $("#select7").hide();
+    $.ajax({
+      type: "POST",
+      url: "ajax/tramites.ajax.php",
+      data: { id: 7 },
+      success: function (data) {
+        document.getElementById("tramite_select").innerHTML = data;
+      },
+    });
   }
 });
+
+function getEncargado() {
+  var iddpto = document.getElementById("departamento").value;
+  $.ajax({
+    type: "POST",
+    url: "ajax/encargados.ajax.php",
+    data: { id: iddpto },
+    success: function (data) {
+      document.getElementById("cardcliente").innerHTML = data;
+    },
+  });
+}

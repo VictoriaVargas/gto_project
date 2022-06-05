@@ -8,3 +8,7 @@ $("#type_user").on("change", function () {
     window.location = "loginexterno";
   }
 });
+
+$(document).ready(function () {
+  $("#myTable").DataTable();
+});

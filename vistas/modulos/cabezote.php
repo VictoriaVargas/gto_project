@@ -19,7 +19,7 @@
               <a href="salir" class="nav-link text-white font-weight-bold px-0">
                 <!-- <i class="fa fa-user me-sm-1"></i> -->
                 <i class="fa fa-sign-out" aria-hidden="true"></i>
-                <span class="d-sm-inline d-none">Parra Vargas Julieta Victoria</span>
+                <span class="d-sm-inline d-none"><?php echo $_SESSION["nombre"]?></span>
               </a>
             </li>
           </ul>

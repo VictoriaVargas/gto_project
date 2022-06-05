@@ -24,7 +24,10 @@
   <link id="pagestyle" href="vistas/assets/css/argon-dashboard.css?v=2.0.2" rel="stylesheet" />
   <!-- Jquery -->
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-
+  
+  <!-- Datatable -->
+  <link href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
+  <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"> </script>
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -42,6 +45,8 @@
                         if($_GET["ruta"] == "inicio" || 
                             $_GET["ruta"] == "salir" ||
                             $_GET["ruta"] == "solicitudesinternos"||
+                            $_GET["ruta"] == "solicitudesexternos"||
+                            $_GET["ruta"] == "cerrarsolicitud"||
                             $_GET["ruta"] == "nuevasolicitud"){
                             
                                 include "modulos/".$_GET["ruta"].".php";
@@ -89,6 +94,8 @@
     <!-- SCRIPTS -->
     <script src="vistas/js/home.js"></script>
     <script src="vistas/js/nuevasolicitud.js"></script>
+    <script src="vistas/js/solicitudinterna.js"></script>
+    <script src="vistas/js/solicitudexterna.js"></script>
 
     <script>
     var win = navigator.platform.indexOf('Win') > -1;

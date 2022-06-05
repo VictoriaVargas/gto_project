@@ -2,11 +2,13 @@
 
 class ControladorSolicitudes{
     static public function ctrGuardar(){
-        if(isset($_POST["departamento"])){
-            
+        if(isset($_POST["departamento"])){            
             $id_solicitante = $_SESSION["idusuario"];
+
             $id_depto = $_POST["departamento"];
-            $id_tramite = $_POST["tramite"];
+            $tramite = $_POST["tramite"];
+            
+        
             $estatus = "Abierta";
             $tiposolicitud = $_POST["tiposolicitud"];
             if($tiposolicitud == 1){
@@ -18,7 +20,7 @@ class ControladorSolicitudes{
             $datos = Array(
                 "id_solicitante" => $id_solicitante,
                 "id_depto" => $id_depto,
-                "id_tramite" => $id_tramite,
+                "id_tramite" => $tramite,
                 "estatus" => $estatus,
 
             );
@@ -27,7 +29,23 @@ class ControladorSolicitudes{
             $respuesta = ModeloSolicitudes::mdlCrear($tabla, $datos);
 
             if($respuesta == "ok"){
-                echo 
+                if($tiposolicitud==1){
+                    echo 
+                    '<script>
+                        Swal.fire({
+                            icon: "success",
+                            title: "Solicitud creada exitosamente.",
+                            showConfirmButton: true, 
+                            confirmButtonText: "Cerrar",
+                            closeOnConfirm : false
+                        }).then((result)=>{
+                            if(result.value){
+                                window.location = "solicitudesinternos";
+                            }
+                        });
+                    </script>';
+                }else{
+                    echo 
                 '<script>
                     Swal.fire({
                         icon: "success",
@@ -37,10 +55,12 @@ class ControladorSolicitudes{
                         closeOnConfirm : false
                     }).then((result)=>{
                         if(result.value){
-                            window.location = "solicitudesinternos";
+                            window.location = "solicitudesexternos";
                         }
                     });
                 </script>';
+                }
+                
 
                 //Funcionalidad Correo
             }else{
@@ -59,7 +79,22 @@ class ControladorSolicitudes{
                         });
                         
                     </script>';
-            }
+            } 
         }
+    }
+
+    static public function ctrObtener($item, $valor){
+        if($valor=="internas"){
+            $tabla = "solicitudes";
+        }else{
+            $tabla = "solicitud_externos";
+        }
+        $respuesta = ModeloSolicitudes::mdlObtener($item, $valor, $tabla);
+        return $respuesta;
+    }
+
+    static public function ctrCerrar($tabla, $campo, $valor){
+        $respuesta = ModeloSolicitudes::mdlCerrar($tabla, $campo, $valor);
+        return $respuesta;
     }
 }

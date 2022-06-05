@@ -42,6 +42,9 @@ class ControladorUsuarios{
                     if($respuesta["correo"] == $_POST["email"]){
                         $_SESSION["iniciarSesion"] = "ok";
                         $_SESSION["idusuario"] = $respuesta["id"];
+                        $_SESSION["type_user"] = $respuesta["tipo_usuario"];
+                        $_SESSION["nombre"] = $respuesta["nombre"];
+                        
                         echo '<script>
                                 window.location = "inicio";
                             </script>';
@@ -54,6 +57,8 @@ class ControladorUsuarios{
                     if($respuesta["rfc"] == $_POST["rfc"]){
                         $_SESSION["iniciarSesion"] = "ok";
                         $_SESSION["idusuario"] = $respuesta["id"];
+                        $_SESSION["type_user"] = $respuesta["tipo_usuario"];
+                        $_SESSION["nombre"] = $respuesta["nombre"];
                         echo '<script>
                                 window.location = "inicio";
                             </script>';
@@ -65,6 +70,8 @@ class ControladorUsuarios{
                     if($respuesta["correo"] == $_POST["email3"] && $respuesta["nombre"] == $_POST["nombre"]){
                         $_SESSION["iniciarSesion"] = "ok";
                         $_SESSION["idusuario"] = $respuesta["id"];
+                        $_SESSION["type_user"] = $respuesta["tipo_usuario"];
+                        $_SESSION["nombre"] = $respuesta["nombre"];
                         echo '<script>
                                 window.location = "inicio";
                             </script>';
