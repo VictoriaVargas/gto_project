@@ -23,7 +23,7 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="vistas/assets/css/argon-dashboard.css?v=2.0.2" rel="stylesheet" />
   <!-- Jquery -->
-  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
   
   <!-- Datatable -->
   <link href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -75,6 +75,9 @@
         if(strpos($url,"gto/loginexterno")){
             include "modulos/loginexterno.php";
         }else
+        if(strpos($url,"gto/registrarse")){
+          include "modulos/registrarse.php";
+        }else
         if(strpos($url,"gto/")){
             include "modulos/login.php";
         }   
@@ -96,6 +99,7 @@
     <script src="vistas/js/nuevasolicitud.js"></script>
     <script src="vistas/js/solicitudinterna.js"></script>
     <script src="vistas/js/solicitudexterna.js"></script>
+    <script src="vistas/js/registrarse.js"></script>
 
     <script>
     var win = navigator.platform.indexOf('Win') > -1;

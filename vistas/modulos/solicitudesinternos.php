@@ -9,7 +9,9 @@ $listsolicitudes = "";
 foreach ($solicitudes as $key => $value) {
 
   $visitante = $value["nombre"];
+  $correo_visita = $value["correo"];
   $departamento = $value["nombre_depto"];
+  $tramite = $value["tramite"];
   $numsolicitud = $value["idsolicitud"];
   $fechasolicitud = $value["fecha_registro"];
   $fechacierre = $value["fecha_cierre"];
@@ -53,8 +55,16 @@ foreach ($solicitudes as $key => $value) {
     </td>
 
     <td class="align-middle text-center">
+    <p class="text-xs font-weight-bold mb-0">'.$correo_visita.'</p>
+  </td>
+
+    <td class="align-middle text-center">
       <p class="text-xs font-weight-bold mb-0">'.$departamento.'</p>
     </td>
+
+    <td class="align-middle text-center">
+    <p class="text-xs font-weight-bold mb-0">'.$tramite.'</p>
+  </td>
 
     <td class="align-middle text-center">
       <span class="text-secondary text-xs font-weight-bold">'.$fechasolicitud.'</span>
@@ -86,7 +96,9 @@ foreach ($solicitudes as $key => $value) {
                     <tr>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Solicitud</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Visitante</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Correo</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Departamento</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Tramite</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fecha de Solicitud</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fecha de Cierre</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Estatus</th>

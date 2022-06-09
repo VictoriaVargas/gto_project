@@ -44,6 +44,7 @@ class ControladorUsuarios{
                         $_SESSION["idusuario"] = $respuesta["id"];
                         $_SESSION["type_user"] = $respuesta["tipo_usuario"];
                         $_SESSION["nombre"] = $respuesta["nombre"];
+                        $_SESSION["correo"] = $respuesta["correo"];
                         
                         echo '<script>
                                 window.location = "inicio";
@@ -59,6 +60,7 @@ class ControladorUsuarios{
                         $_SESSION["idusuario"] = $respuesta["id"];
                         $_SESSION["type_user"] = $respuesta["tipo_usuario"];
                         $_SESSION["nombre"] = $respuesta["nombre"];
+                        $_SESSION["correo"] = $respuesta["correo"];
                         echo '<script>
                                 window.location = "inicio";
                             </script>';
@@ -72,6 +74,7 @@ class ControladorUsuarios{
                         $_SESSION["idusuario"] = $respuesta["id"];
                         $_SESSION["type_user"] = $respuesta["tipo_usuario"];
                         $_SESSION["nombre"] = $respuesta["nombre"];
+                        $_SESSION["correo"] = $respuesta["correo"];
                         echo '<script>
                                 window.location = "inicio";
                             </script>';
@@ -88,138 +91,119 @@ class ControladorUsuarios{
 
     }
 
+    static public function ctrRegistroUsuario(){
+        if(isset($_POST["nombrecompleto"])){
+            $ruta = "";
+            if(isset($_FILES["imagen"]["tmp_name"])){
+                list($ancho, $alto) = getimagesize($_FILES["imagen"]["tmp_name"]);
 
-    /*******************  */
-    // REGISTRO DE USUARIO 
-    /**************  ***/
+                $nuevoancho = 150;
+                $nuevoalto = 150;
 
-    static public function ctrCrearUsuario(){
+                /**************  CREAMOS EL DIRECTORIO DONDE SE GUARDARA LA IMAGEN ***/
 
+                $directorio = "vistas/assets/img/".$_POST["nombrecompleto"];
+                mkdir($directorio, 0755);
 
-        if(isset($_POST["user"])){
+                if($_FILES["imagen"]["type"] == "image/jpeg"){
 
-            if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/',$_POST["nombrecompleto"]) &&
-                preg_match('/^[a-zA-Z0-9]+$/',$_POST["user"]) &&
-                preg_match('/^[a-zA-Z0-9]+$/',$_POST["password"])){
+                    $aleatorio = mt_rand(100,999); 
 
-                    $ruta ="";
+                    $ruta = "vistas/assets/img/".$_POST["nombrecompleto"]."/".$aleatorio.".jpg";
 
-                    if(isset($_FILES["nuevaFoto"]["tmp_name"])){ 
+                    $origen = imagecreatefromjpeg($_FILES["imagen"]["tmp_name"]);
 
-                        list($ancho, $alto) = getimagesize($_FILES["nuevaFoto"]["tmp_name"]);
+                    $destino = imagecreatetruecolor($nuevoancho,$nuevoalto);
 
-                        $nuevoancho = 150;
-                        $nuevoalto = 150;
+                    imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoancho, $nuevoalto, $ancho, $alto);
 
-                        /**************  CREAMOS EL DIRECTORIO DONDE SE GUARDARA LA IMAGEN ***/
+                    imagejpeg($destino, $ruta);
 
-                        $directorio = "vistas/img/usuarios/".$_POST["user"];
-                        mkdir($directorio, 0755);
+                }
 
-                        if($_FILES["nuevaFoto"]["type"] == "image/jpeg"){
+                if($_FILES["imagen"]["type"] == "image/png"){
 
-                            $aleatorio = mt_rand(100,999); 
+                    $aleatorio = mt_rand(100,999); 
 
-                            $ruta = "vistas/img/usuarios/".$_POST["user"]."/".$aleatorio.".jpg";
+                    $ruta = "vistas/assets/img/".$_POST["nombrecompleto"]."/".$aleatorio.".png";
 
-                            $origen = imagecreatefromjpeg($_FILES["nuevaFoto"]["tmp_name"]);
+                    $origen = imagecreatefrompng($_FILES["imagen"]["tmp_name"]);
 
-                            $destino = imagecreatetruecolor($nuevoancho,$nuevoalto);
+                    $destino = imagecreatetruecolor($nuevoancho,$nuevoalto);
 
-                            imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoancho, $nuevoalto, $ancho, $alto);
+                    imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoancho, $nuevoalto, $ancho, $alto);
 
-                            imagejpeg($destino, $ruta);
+                    imagepng($destino, $ruta);
 
-                        }
-
-                        if($_FILES["nuevaFoto"]["type"] == "image/png"){
-
-                            $aleatorio = mt_rand(100,999); 
-
-                            $ruta = "vistas/img/usuarios/".$_POST["user"]."/".$aleatorio.".png";
-
-                            $origen = imagecreatefrompng($_FILES["nuevaFoto"]["tmp_name"]);
-
-                            $destino = imagecreatetruecolor($nuevoancho,$nuevoalto);
-
-                            imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoancho, $nuevoalto, $ancho, $alto);
-
-                            imagepng($destino, $ruta);
-
-                        }
-
-                        
-
-
-                    }
-                    
-
-                    
-
-                    $tabla = "bio_users";
-
-                    $encriptar = crypt($_POST["password"], '$1$rasmusle$'); 
-
-                    $datos = array("id" => bin2hex(openssl_random_pseudo_bytes(16)),
-                    "name" => $_POST["nombrecompleto"],
-                    "user" => $_POST["user"],
-                    "password" => $encriptar,
-                    "type_user" => $_POST["tipodeusuario"],
-                    "email" => $_POST["email"],
-                    "phone" => $_POST["telefono"],
-                    "status" => $_POST["status"],
-                    "date_entered" => date("Y-m-d H:i:s"),
-                    "avatar" => $ruta);
-
-                    $respuesta = ModeloUsuarios::mdlIngresarUsuario($tabla, $datos);
-
-                    if($respuesta == "ok"){
-
-                        echo '<script>
-                
-                                Swal.fire({
-                                    icon: "success",
-                                    title: "El usuario ha sido guardado exitosamente",
-                                    showConfirmButton: true, 
-                                    confirmButtonText: "Cerrar",
-                                    closeOnConfirm : false
-
-                                }).then((result)=>{
-                                    if(result.value){
-                                        window.location = "usuarios";
-                                    }
-                                });
-                
-                        </script>';
-
-                    }
-                
-
-                }else{
-
-                echo '<script>
-                
-                Swal.fire({
-                    title: "El usuario no puede ir vacío o llevar caracteres especiales",
-                    icon: "error",
-                    showConfirmButton: true, 
-                    confirmButtonText: "Cerrar",
-                    closeOnConfirm : false
-                }).then((result)=>{
-                     
-                        if(result.value){
-                            window.location = "crearusuario";
-                        }
-
-                });
-                
-                </script>';
-
+                }
+            }
+            $tabla = "usuarios";
+            $rfc = "";
+            if(isset($_POST["rfc"])){
+                $rfc = $_POST["rfc"];
+            }else{
+                $rfc = "";
             }
 
+            $ct = "";
+            if(isset($_POST["centrotrabajo"])){
+                $ct = $_POST["centrotrabajo"];
+            }else{
+                $ct = "";
+            }
+
+            
+            $datos = array(
+                "nombre" => $_POST["nombrecompleto"],
+                "password" => $_POST["password"],
+                "correo" => $_POST["email"],
+                "tipo_usuario"=> $_POST["newtype_user"],
+                "centro_trabajo"=>$ct,
+                "imagen"=>$ruta,
+                "rfc"=>$rfc);
+            
+            $respuesta = ModeloUsuarios::mdlNuevoUsuario($tabla, $datos);
+
+                if($respuesta == "ok"){
+
+                    echo '<script>
+            
+                            Swal.fire({
+                                icon: "success",
+                                title: "El usuario ha sido creado exitosamente",
+                                showConfirmButton: true, 
+                                confirmButtonText: "Cerrar",
+                                closeOnConfirm : false
+
+                            }).then((result)=>{
+                                if(result.value){
+                                    window.location = "login";
+                                }
+                            });
+            
+                    </script>';
+
+                }else{
+                    echo '<script>
+                
+                    Swal.fire({
+                        title: "Error al crear usuario.",
+                        icon: "error",
+                        showConfirmButton: true, 
+                        confirmButtonText: "Cerrar",
+                        closeOnConfirm : false
+                    }).then((result)=>{
+                         
+                            if(result.value){
+                                window.location = "registrarse";
+                            }
+    
+                    });
+                    
+                    </script>';
+                }
+            
         }
-
-
     }
     
 }

@@ -29,21 +29,16 @@ class ModeloUsuarios{
 
     /*REGISTRO DE USUARIO*/
 
-    static public function mdlIngresarUsuario($tabla, $datos){
+    static public function mdlNuevoUsuario($tabla, $datos){
+        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (nombre,password,rfc,correo,tipo_usuario,centro_trabajo,imagen) VALUES (:nombre, :password, :rfc, :correo, :tipo_usuario, :centro_trabajo, :imagen)");
 
-
-        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (id_user, user, password, type_user, name, email, phone, status, date_entered, avatar) VALUES (:id, :user, :password, :type_user, :name, :email, :phone, :status, :date_entered, :avatar)");
-
-        $stmt -> bindParam(":id", $datos["id"], PDO::PARAM_STR);
-        $stmt -> bindParam(":user", $datos["user"], PDO::PARAM_STR);
+        $stmt -> bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
         $stmt -> bindParam(":password", $datos["password"], PDO::PARAM_STR);
-        $stmt -> bindParam(":type_user", $datos["type_user"], PDO::PARAM_STR);
-        $stmt -> bindParam(":name", $datos["name"], PDO::PARAM_STR);
-        $stmt -> bindParam(":email", $datos["email"], PDO::PARAM_STR);
-        $stmt -> bindParam(":phone", $datos["phone"], PDO::PARAM_STR);
-        $stmt -> bindParam(":status", $datos["status"], PDO::PARAM_STR);
-        $stmt -> bindParam(":date_entered", $datos["date_entered"], PDO::PARAM_STR);
-        $stmt -> bindParam(":avatar", $datos["avatar"], PDO::PARAM_STR);
+        $stmt -> bindParam(":rfc", $datos["rfc"], PDO::PARAM_STR);
+        $stmt -> bindParam(":correo", $datos["correo"], PDO::PARAM_STR);
+        $stmt -> bindParam(":tipo_usuario", $datos["tipo_usuario"], PDO::PARAM_STR);
+        $stmt -> bindParam(":centro_trabajo", $datos["centro_trabajo"], PDO::PARAM_STR);
+        $stmt -> bindParam(":imagen", $datos["imagen"], PDO::PARAM_STR);
 
         if($stmt->execute()){
             return "ok";
